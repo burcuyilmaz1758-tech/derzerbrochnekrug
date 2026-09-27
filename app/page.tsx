@@ -70,17 +70,17 @@ const initialPlot = [plotSolution[3], plotSolution[0], plotSolution[5], plotSolu
 const completePlot = [...knownPlot, ...plotSolution];
 
 const relationTokens = [
-  { id: "role", text: "Nachbarin · unbeteiligte Zeugin" },
+  { id: "family", text: "Veits Schwester · Ruprechts Tante" },
   { id: "evidence", text: "findet Perücke und verfolgt Fußspuren" },
   { id: "eve", text: "entlastet Ruprecht und beschuldigt Adam" },
-  { id: "authority", text: "Adams Autorität bricht zusammen" },
+  { id: "authority", text: "entlässt Adam · überträgt Licht das Amt" },
 ];
 
 const relationSlots = [
-  { id: "role", label: "Frau Brigitte – Rolle", className: "slot-role" },
+  { id: "family", label: "Frau Brigitte ↔ Veit/Ruprecht", className: "slot-family" },
   { id: "evidence", label: "Frau Brigitte → Adam", className: "slot-evidence" },
   { id: "eve", label: "Eve → Adam/Ruprecht", className: "slot-eve" },
-  { id: "authority", label: "Folge der Aufklärung", className: "slot-authority" },
+  { id: "authority", label: "Walter → Adam/Licht", className: "slot-authority" },
 ];
 
 const levelHints: Record<Level, { figure: string; plot: string }> = {
@@ -225,22 +225,39 @@ export default function Home() {
 
           <div className="diagram-scroll">
             <div className="figure-diagram">
+              <svg className="relationship-lines" viewBox="0 0 950 580" aria-hidden="true">
+                <defs>
+                  <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+                    <path d="M 0 0 L 8 4 L 0 8 z" />
+                  </marker>
+                </defs>
+                <path className="line-purple" d="M225 74 L405 74" />
+                <path className="line-green" d="M155 235 L155 105" />
+                <path className="line-green" d="M225 255 Q270 175 405 90" />
+                <path className="line-cyan" d="M805 102 Q600 5 225 65" />
+                <path className="line-yellow" d="M475 235 L475 105" />
+                <path className="line-yellow" d="M405 262 Q310 240 220 95" />
+                <path className="line-pink" d="M725 265 L545 265" />
+                <path className="line-orange" d="M475 475 L475 295" />
+              </svg>
+
               <div className="node marthe">Frau Marthe<small>Mutter · Klägerin</small></div>
               <div className="node eve">Eve<small>Tochter · unter Druck</small></div>
               <div className="node ruprecht">Ruprecht<small>Verlobter · beschuldigt</small></div>
-              <div className="node walter">Walter<small>kontrolliert Adam</small></div>
-              <div className="node adam">Adam<small>Richter ↔ Täter</small></div>
-              <div className="node licht">Licht<small>beobachtet Adam</small></div>
+              <div className="node walter">Walter<small>Vorgesetzter · kontrolliert</small></div>
+              <div className="node adam">Adam<small>Richter · unter Verdacht</small></div>
+              <div className="node licht">Licht<small>beobachtet kritisch · hofft auf Beförderung</small></div>
               <div className="node brigitte">Frau Brigitte<small>neue Zeugin</small></div>
               <div className="node veit">Veit Tümpel<small>Ruprechts Vater</small></div>
 
               <span className="known k1">Mutter / Tochter</span>
               <span className="known k2">verlobt · Konflikt</span>
-              <span className="known k3">beschuldigt</span>
-              <span className="known k4">setzt unter Druck</span>
-              <span className="known k5">Vorgesetzter</span>
-              <span className="known k6">beobachtet</span>
+              <span className="known k3">Marthe beschuldigt Ruprecht</span>
+              <span className="known k4">Adam setzt Eve unter Druck</span>
+              <span className="known k5">Vorgesetzter · kontrolliert Adam</span>
+              <span className="known k6">Licht beobachtet Adam kritisch</span>
               <span className="known k7">Vater / Sohn</span>
+              <span className="known k8">Adam beschuldigt Ruprecht</span>
 
               {relationSlots.map((slot) => {
                 const tokenId = assignments[slot.id];
