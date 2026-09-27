@@ -159,7 +159,6 @@ export default function Home() {
     <main className="app-shell">
       <header className="topbar">
         <div className="brand-lockup">
-          <div className="brand-mark" aria-hidden="true">K</div>
           <div>
             <span className="course-code">GK Deutsch Q1 · Erd</span>
             <strong>Der zerbrochne Krug</strong>
@@ -182,6 +181,14 @@ export default function Home() {
           <h1 id="hero-title">Wer zerbrach den Krug – und was zerbricht noch?</h1>
           <p>Ergänzt das Beziehungsnetz der Figuren und bringt anschließend den zweiten Teil der Handlung in die richtige Reihenfolge.</p>
         </div>
+        <div className="adam-figure" aria-hidden="true">
+          <i className="figure-hair" />
+          <i className="figure-head" />
+          <i className="figure-nose" />
+          <i className="figure-bandage" />
+          <i className="figure-torso" />
+          <i className="figure-collar" />
+        </div>
         <div className="jug-scene" aria-hidden="true">
           <div className="jug-handle" />
           <div className="jug">
@@ -192,23 +199,22 @@ export default function Home() {
       </section>
 
       <nav className="stepper" aria-label="Arbeitsschritte">
-        <button className={step === 1 ? "active" : ""} onClick={() => setStep(1)}><b>1</b><span>Figuren</span><small>7 Min.</small></button>
+        <button className={step === 1 ? "active" : ""} onClick={() => setStep(1)}><b>1</b><span>Figuren</span></button>
         <i />
-        <button className={step === 2 ? "active" : ""} onClick={() => setStep(2)}><b>2</b><span>Handlung</span><small>12 Min.</small></button>
+        <button className={step === 2 ? "active" : ""} onClick={() => setStep(2)}><b>2</b><span>Handlung</span></button>
       </nav>
 
       {step === 1 && (
         <section className="activity">
           <div className="activity-head">
-            <div><span>AUFGABE 1 · PARTNERARBEIT</span><h1>Figurenkonstellation ergänzen</h1><p>Das Schaubild zeigt euren Stand bis zum 7. Auftritt. Ergänzt nur die vier neuen Beziehungen.</p></div>
-            <div className="time">7 <small>Min.</small></div>
+            <div><span>AUFGABE 1 · EINZELARBEIT</span><h1>Figurenkonstellation ergänzen</h1><p>Das Schaubild zeigt euren Stand bis zum 7. Auftritt. Ergänze nur die vier neuen Beziehungen.</p></div>
           </div>
 
           <ol className="instructions">
-            <li>Vergleicht das Schaubild mit eurem bisherigen Ergebnis zu den Auftritten 1–7.</li>
-            <li>Ordnet die vier Ergänzungskarten den passenden gestrichelten Feldern zu.</li>
-            <li>Wählt <strong>„Lösung prüfen“</strong> und verbessert eure Zuordnung, falls nötig.</li>
-            <li>Fotografiert die <strong>richtige Figurenkonstellation</strong> und ladet das Bild in OneNote unter <strong>„Figurenkonstellation“</strong> hoch.</li>
+            <li>Vergleiche das Schaubild mit deinem bisherigen Ergebnis zu den Auftritten 1–7.</li>
+            <li>Ordne die vier Ergänzungskarten den passenden gestrichelten Feldern zu.</li>
+            <li>Wähle <strong>„Lösung prüfen“</strong> und verbessere deine Zuordnung, falls nötig.</li>
+            <li>Erstelle einen Screenshot der <strong>richtigen Figurenkonstellation</strong> und lade das Bild in OneNote unter <strong>„Figurenkonstellation“</strong> hoch.</li>
           </ol>
 
           <div className="hint">{levelHints[level].figure}</div>
@@ -278,7 +284,6 @@ export default function Home() {
         <section className="activity">
           <div className="activity-head">
             <div><span>AUFGABE 2 · EINZELARBEIT, DANN PARTNERVERGLEICH</span><h1>Den Handlungsverlauf vervollständigen</h1><p>Auftritt 1–7 ist bereits vorgegeben. Ihr ordnet ausschließlich die Auftritte 8–13.</p></div>
-            <div className="time">12 <small>Min.</small></div>
           </div>
 
           <ol className="instructions">
