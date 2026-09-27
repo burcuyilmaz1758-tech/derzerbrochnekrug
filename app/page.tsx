@@ -246,7 +246,7 @@ export default function Home() {
               <div className="node ruprecht">Ruprecht<small>Verlobter · beschuldigt</small></div>
               <div className="node walter">Walter<small>Vorgesetzter · kontrolliert</small></div>
               <div className="node adam">Adam<small>Richter · unter Verdacht</small></div>
-              <div className="node licht">Licht<small>beobachtet kritisch · hofft auf Beförderung</small></div>
+              <div className="node licht">Licht<small>fragt nach Adams Wunden · arbeitet pflichtbewusst</small></div>
               <div className="node brigitte">Frau Brigitte<small>neue Zeugin</small></div>
               <div className="node veit">Veit Tümpel<small>Ruprechts Vater</small></div>
 
@@ -255,7 +255,7 @@ export default function Home() {
               <span className="known k3">Marthe beschuldigt Ruprecht</span>
               <span className="known k4">Adam setzt Eve unter Druck</span>
               <span className="known k5">Vorgesetzter · kontrolliert Adam</span>
-              <span className="known k6">Licht beobachtet Adam kritisch</span>
+              <span className="known k6">Licht beobachtet und befragt Adam</span>
               <span className="known k7">Vater / Sohn</span>
               <span className="known k8">Adam beschuldigt Ruprecht</span>
 
