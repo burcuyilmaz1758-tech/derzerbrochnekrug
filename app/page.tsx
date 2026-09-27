@@ -70,14 +70,14 @@ const initialPlot = [plotSolution[3], plotSolution[0], plotSolution[5], plotSolu
 const completePlot = [...knownPlot, ...plotSolution];
 
 const relationTokens = [
-  { id: "family", text: "Schwester von Veit · Tante von Ruprecht" },
+  { id: "role", text: "Nachbarin · unbeteiligte Zeugin" },
   { id: "evidence", text: "findet Perücke und verfolgt Fußspuren" },
   { id: "eve", text: "entlastet Ruprecht und beschuldigt Adam" },
   { id: "authority", text: "Adams Autorität bricht zusammen" },
 ];
 
 const relationSlots = [
-  { id: "family", label: "Frau Brigitte ↔ Veit/Ruprecht", className: "slot-family" },
+  { id: "role", label: "Frau Brigitte – Rolle", className: "slot-role" },
   { id: "evidence", label: "Frau Brigitte → Adam", className: "slot-evidence" },
   { id: "eve", label: "Eve → Adam/Ruprecht", className: "slot-eve" },
   { id: "authority", label: "Folge der Aufklärung", className: "slot-authority" },
