@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 type Level = "foerder" | "basis" | "erweitert";
-type Step = 1 | 2 | 3;
+type Step = 1 | 2;
 
 type PlotCard = {
   id: number;
@@ -13,16 +13,15 @@ type PlotCard = {
 };
 
 const plotSolution: PlotCard[] = [
-  { id: 8, act: "8", title: "Getränke", text: "Adam lässt Wasser bringen und bietet Walter Wasser oder Wein an." },
-  { id: 9, act: "9", title: "Eves Aussage", text: "Eve entlastet Ruprecht. Frau Brigitte soll als Zeugin geholt werden." },
-  { id: 10, act: "10", title: "Pause und Nachfragen", text: "Licht holt Brigitte. Adam bewirtet Walter und sucht das Gespräch mit Eve." },
-  { id: 11, act: "11", title: "Entlarvung", text: "Brigittes Funde weisen auf Adam. Eve bricht ihr Schweigen; Adam flieht." },
-  { id: 12, act: "12", title: "Amtsmissbrauch", text: "Adams Täuschung und sein Versuch, in Eves Zimmer zu gelangen, werden aufgeklärt." },
-  { id: 125, act: "V", title: "Variant zum 12. Auftritt", text: "Die längere ursprüngliche Fassung erklärt Eves Lage, Adams Täuschung und die Vertrauensfrage ausführlicher." },
-  { id: 13, act: "13", title: "Offener Krugfall", text: "Über den Krug wird nicht abschließend geurteilt; Marthe wird an ein höheres Gericht verwiesen." },
+  { id: 8, act: "8", title: "Getränke", text: "Adam lässt sich ein Glas Wasser bringen und bietet Walter ebenfalls eines oder Wein an." },
+  { id: 9, act: "9", title: "Verhandlung II: Eve", text: "Von Adam, der die Verhandlung schnell beenden will, und Marthe, die von ihrer Auffassung, wer den Krug zerbrochen hat, nicht abrückt, unter Druck gesetzt, beteuert Eve, dass es ihr Verlobter nicht gewesen sei. Ihre Mutter verdächtigt das Paar nun, seine Flucht vorbereitet zu haben: Frau Brigitte habe es in Marthes Garten beobachtet und solle es bezeugen." },
+  { id: 10, act: "10", title: "Bewirtung und Zwischenfragen", text: "Während Licht Frau Brigitte herbeiholt, nutzt Adam die Verhandlungspause, um Walter zu bewirten, und sucht nach einer Gelegenheit, um mit Eve allein zu sprechen. Fragen des Gerichtsrats kommen dem Dorfrichter als Täter immer näher, der sich dem Verdacht weiterhin zu entziehen versucht." },
+  { id: 11, act: "11", title: "Entlarvung", text: "Frau Brigitte berichtet vom Fund der Perücke vor Eves Fenster, von der Spur zweier ungleicher Füße und weiteren Anzeichen, die auf Adam deuten. Der Dorfrichter gesteht aber immer noch nicht und will Ruprecht bestrafen. Deshalb schweigt dessen Verlobte nicht länger. Sie fordert den zu Unrecht Verurteilten auf, mit Gewalt gegen Adam vorzugehen, der aber entkommt, sodass die Prügel nur den Mantel treffen." },
+  { id: 12, act: "12", title: "Amtsmissbrauch", text: "Es stellt sich heraus, dass Adam sich durch Betrug Zugang zu Eves Zimmer verschaffen wollte." },
+  { id: 13, act: "13", title: "Der Krug", text: "Da wegen des zerbrochenen Krugs kein Urteil gefällt worden ist, verweist der Gerichtsrat Frau Marthe an eine höhere Instanz." },
 ];
 
-const initialPlot = [plotSolution[3], plotSolution[0], plotSolution[5], plotSolution[2], plotSolution[6], plotSolution[1], plotSolution[4]];
+const initialPlot = [plotSolution[3], plotSolution[0], plotSolution[5], plotSolution[2], plotSolution[1], plotSolution[4]];
 
 const relationTokens = [
   { id: "family", text: "Schwester von Veit · Tante von Ruprecht" },
@@ -38,21 +37,18 @@ const relationSlots = [
   { id: "authority", label: "Folge der Aufklärung", className: "slot-authority" },
 ];
 
-const levelHints: Record<Level, { figure: string; plot: string; question: string }> = {
+const levelHints: Record<Level, { figure: string; plot: string }> = {
   foerder: {
     figure: "Ordnet zuerst die Verwandtschaft zu. Fragt danach: Wer liefert welches Wissen?",
     plot: "Start: Adam bewirtet Walter. Ende: Über den Krug wird noch nicht geurteilt.",
-    question: "Satzstarter: Unklar geblieben ist mir … / Ich denke, dass …, weil …",
   },
   basis: {
     figure: "Ergänzt nur die Beziehungen, die sich durch die Auftritte 8–13 neu ergeben.",
     plot: "Ordnet danach, wie sich der Verdacht Schritt für Schritt zur Entlarvung verdichtet.",
-    question: "Formuliert eine echte Verständnis- oder Deutungsfrage zur Ganzlektüre.",
   },
   erweitert: {
     figure: "Achtet zusätzlich darauf, wer durch Brigittes Aussage Autorität gewinnt oder verliert.",
     plot: "Erklärt anschließend, warum Kleist die vollständige Aufklärung bis zum Schluss verzögert.",
-    question: "Verbindet eure Frage mit Gerechtigkeit, Macht oder Vertrauen in die Rechtsprechung.",
   },
 };
 
@@ -65,10 +61,6 @@ export default function Home() {
   const [plot, setPlot] = useState(initialPlot);
   const [dragPlot, setDragPlot] = useState<number | null>(null);
   const [plotChecked, setPlotChecked] = useState(false);
-  const [variantAnswer, setVariantAnswer] = useState("");
-  const [variantChecked, setVariantChecked] = useState(false);
-  const [prompt, setPrompt] = useState("Was ist dir nach der Lektüre unklar geblieben?");
-  const [question, setQuestion] = useState("");
 
   const figureCorrect = useMemo(
     () => relationSlots.every((slot) => assignments[slot.id] === slot.id),
@@ -137,9 +129,7 @@ export default function Home() {
       <nav className="stepper" aria-label="Arbeitsschritte">
         <button className={step === 1 ? "active" : ""} onClick={() => setStep(1)}><b>1</b><span>Figuren</span><small>7 Min.</small></button>
         <i />
-        <button className={step === 2 ? "active" : ""} onClick={() => setStep(2)}><b>2</b><span>Handlung</span><small>10 Min.</small></button>
-        <i />
-        <button className={step === 3 ? "active" : ""} onClick={() => setStep(3)}><b>3</b><span>Fragen</span><small>15 Min.</small></button>
+        <button className={step === 2 ? "active" : ""} onClick={() => setStep(2)}><b>2</b><span>Handlung</span><small>12 Min.</small></button>
       </nav>
 
       {step === 1 && (
@@ -148,6 +138,13 @@ export default function Home() {
             <div><span>AUFGABE 1 · PARTNERARBEIT</span><h1>Figurenkonstellation ergänzen</h1><p>Das Schaubild zeigt euren Stand bis zum 7. Auftritt. Ergänzt nur die vier neuen Beziehungen.</p></div>
             <div className="time">7 <small>Min.</small></div>
           </div>
+
+          <ol className="instructions">
+            <li>Vergleicht das Schaubild mit eurer Sicherung bis zum 7. Auftritt.</li>
+            <li>Ordnet die vier Ergänzungskarten den passenden gestrichelten Feldern zu.</li>
+            <li>Wählt <strong>„Lösung prüfen“</strong> und verbessert eure Zuordnung, falls nötig.</li>
+            <li>Fotografiert die <strong>richtige Figurenkonstellation</strong> und ladet das Bild in OneNote unter <strong>„Figurenkonstellation“</strong> hoch.</li>
+          </ol>
 
           <div className="hint">{levelHints[level].figure}</div>
 
@@ -206,7 +203,7 @@ export default function Home() {
 
           <div className="actionbar">
             <button className="check" onClick={() => setFigureChecked(true)}>Lösung prüfen</button>
-            {figureChecked && <span className={figureCorrect ? "ok" : "no"}>{figureCorrect ? "Richtig! Jetzt Screenshot erstellen und in OneNote hochladen." : "Noch nicht ganz – vertauschte Karten zurücknehmen und neu zuordnen."}</span>}
+            {figureChecked && <span className={figureCorrect ? "ok" : "no"}>{figureCorrect ? "Richtig! Jetzt fotografieren und in OneNote hochladen." : "Noch nicht ganz – vertauschte Karten zurücknehmen und neu zuordnen."}</span>}
             <button className="next" onClick={() => setStep(2)}>Weiter zur Handlung →</button>
           </div>
         </section>
@@ -215,13 +212,20 @@ export default function Home() {
       {step === 2 && (
         <section className="activity">
           <div className="activity-head">
-            <div><span>AUFGABE 2 · EINZELARBEIT, DANN VERGLEICH</span><h1>Handlung 8–13 ordnen</h1><p>Bringt die Karten in die richtige Reihenfolge. Der Variant gehört als Alternative direkt zum 12. Auftritt.</p></div>
-            <div className="time">10 <small>Min.</small></div>
+            <div><span>AUFGABE 2 · EINZELARBEIT, DANN PARTNERVERGLEICH</span><h1>Handlung 8–13 ordnen</h1><p>Die Karten verwenden den Wortlaut des Einfach-Deutsch-Unterrichtsmodells.</p></div>
+            <div className="time">12 <small>Min.</small></div>
           </div>
+
+          <ol className="instructions">
+            <li>Bringt die sechs Karten zu den Auftritten 8–13 in die richtige Reihenfolge.</li>
+            <li>Vergleicht eure Reihenfolge kurz mit einer Partnerin oder einem Partner.</li>
+            <li>Wählt <strong>„Reihenfolge prüfen“</strong> und verbessert sie, falls nötig.</li>
+            <li>Lest die richtige Übersicht vollständig. Fotografiert sie und ladet das Bild in OneNote unter <strong>„Handlungsverlauf“</strong> hoch.</li>
+          </ol>
 
           <div className="hint">{levelHints[level].plot}</div>
 
-          <div className="sort-list">
+          <div className={`sort-list ${plotChecked && plotCorrect ? "is-solution" : ""}`}>
             {plot.map((card, index) => (
               <article
                 key={card.id}
@@ -239,46 +243,22 @@ export default function Home() {
             ))}
           </div>
 
+          {plotChecked && plotCorrect && (
+            <aside className="variant-note">
+              <strong>Wichtig zum Variant:</strong>
+              <span>Der Variant ist die ausführlichere ursprüngliche Fassung des 12. Auftritts. Er ist kein zusätzlicher 14. Auftritt und wird deshalb nicht als eigene Karte an das Ende gesetzt.</span>
+            </aside>
+          )}
+
           <div className="actionbar">
             <button className="check" onClick={() => setPlotChecked(true)}>Reihenfolge prüfen</button>
-            {plotChecked && <span className={plotCorrect ? "ok" : "no"}>{plotCorrect ? "Richtig! Screenshot erstellen und in OneNote unter ‚Handlungsverlauf‘ hochladen." : "Noch nicht richtig. Die Bewirtung eröffnet den zweiten Teil; der Krugfall bleibt zuletzt offen."}</span>}
-            <button className="next" onClick={() => setStep(3)}>Weiter zu den Fragen →</button>
+            {plotChecked && <span className={plotCorrect ? "ok" : "no"}>{plotCorrect ? "Richtig! Jetzt vollständig lesen, fotografieren und in OneNote hochladen." : "Noch nicht richtig. Die Bewirtung eröffnet den zweiten Teil; der Krugfall bleibt zuletzt offen."}</span>}
           </div>
-        </section>
-      )}
-
-      {step === 3 && (
-        <section className="activity compact-activity">
-          <div className="activity-head">
-            <div><span>AUFGABE 3 · THINK–PAIR–SHARE</span><h1>Offene Fragen klären</h1><p>Wählt einen Impuls, notiert eure Antwort und übertragt die wichtigste Frage in OneNote.</p></div>
-            <div className="time">15 <small>Min.</small></div>
-          </div>
-
-          <div className="hint">{levelHints[level].question}</div>
-
-          <div className="prompt-row">
-            {["Was ist dir nach der Lektüre unklar geblieben?", "Welche Figur beurteilst du anders als zu Beginn?", "Wer trägt welche Schuld?", "Was hat dir gefallen oder nicht gefallen?"].map((item) => (
-              <button key={item} className={prompt === item ? "prompt active" : "prompt"} onClick={() => setPrompt(item)}>{item}</button>
-            ))}
-          </div>
-          <label className="question-box"><span>{prompt}</span><textarea value={question} onChange={(event) => setQuestion(event.target.value)} placeholder="Notiere hier deine Antwort oder offene Frage …" /></label>
-          <div className="one-note">1. still notieren · 2. zu zweit vergleichen · 3. wichtigste Frage in OneNote eintragen</div>
-
-          <div className="variant-check">
-            <div><b>Variant-Check</b><span>Was ist der Variant?</span></div>
-            <button className={variantAnswer === "fourteen" ? "chosen" : ""} onClick={() => { setVariantAnswer("fourteen"); setVariantChecked(false); }}>ein zusätzlicher 14. Auftritt</button>
-            <button className={variantAnswer === "original" ? "chosen" : ""} onClick={() => { setVariantAnswer("original"); setVariantChecked(false); }}>die längere ursprüngliche Fassung des 12. Auftritts</button>
-            <button className="small-check" onClick={() => setVariantChecked(true)}>prüfen</button>
-          </div>
-          {variantChecked && <div className={variantAnswer === "original" ? "variant-result ok" : "variant-result no"}>{variantAnswer === "original" ? "Richtig. Der Variant erklärt vor allem Eves Lage, Adams Täuschung und die Vertrauensfrage ausführlicher." : "Nicht ganz. Der Variant ist kein neuer Auftritt, sondern eine alternative Langfassung des 12. Auftritts."}</div>}
-
-          <div className="finish-box"><b>Exit-Ticket</b><span>„In der nächsten Stunde möchte ich vor allem klären, …“</span></div>
         </section>
       )}
 
       <footer>
-        <span>45 Minuten · Figuren → Handlung → offene Fragen</span>
-        <a href="https://learningapps.org/53819527" target="_blank" rel="noreferrer">Sprinter: weitere LearningApp ↗</a>
+        <span>Figurenkonstellation → Handlungsverlauf → Sicherung in OneNote</span>
       </footer>
     </main>
   );
