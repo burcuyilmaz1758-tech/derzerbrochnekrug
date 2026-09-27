@@ -16,6 +16,8 @@ Die Aufgaben bieten die Differenzierungsstufen **Förder**, **Basis** und **Erwe
 
 [zerbrochne-krug-45-minuten.burcu-yilmaz1758.chatgpt.site](https://zerbrochne-krug-45-minuten.burcu-yilmaz1758.chatgpt.site)
 
+Das Repository ist zusätzlich für die Bereitstellung über **Vercel** konfiguriert. Vercel verwendet den regulären Next.js-Build und erzeugt dabei den erwarteten `.next`-Ordner.
+
 ## Lokal starten
 
 Voraussetzung: Node.js ab Version 22.13.
