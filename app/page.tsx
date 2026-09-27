@@ -7,7 +7,7 @@ type Section = "start" | "schnellstart" | "material" | "lehrkraft";
 
 type PlotCard = {
   id: number;
-  act: number;
+  act: number | string;
   title: string;
   summary: string;
 };
@@ -18,10 +18,11 @@ const plotSolution: PlotCard[] = [
   { id: 10, act: 10, title: "Pause und Nachfragen", summary: "Licht holt Brigitte. Adam bewirtet Walter, sucht das Gespräch mit Eve und gerät durch Walters Fragen unter Druck." },
   { id: 11, act: 11, title: "Entlarvung", summary: "Brigittes Funde weisen auf Adam. Eve bricht ihr Schweigen, Adam flieht und verliert seine Autorität." },
   { id: 12, act: 12, title: "Amtsmissbrauch", summary: "Adams Täuschung und sein Versuch, Zugang zu Eves Zimmer zu erhalten, werden aufgeklärt." },
+  { id: 125, act: "V", title: "Variant zum 12. Auftritt", summary: "Die ursprüngliche längere Fassung erzählt Eves Lage, Adams Täuschung und die Vertrauensfrage ausführlicher. Sie ist kein 14. Auftritt." },
   { id: 13, act: 13, title: "Offener Rechtsfall", summary: "Über den Krug wird nicht abschließend geurteilt; Marthe wird an ein höheres Gericht verwiesen." },
 ];
 
-const shuffledPlot = [plotSolution[2], plotSolution[0], plotSolution[4], plotSolution[1], plotSolution[5], plotSolution[3]];
+const shuffledPlot = [plotSolution[2], plotSolution[0], plotSolution[5], plotSolution[1], plotSolution[6], plotSolution[3], plotSolution[4]];
 
 const figurePrompts = [
   { id: "brigitte-veit", lead: "Frau Brigitte ist …", answer: "die Schwester von Veit und die Tante von Ruprecht.", options: ["Eves Nachbarin.", "die Schwester von Veit und die Tante von Ruprecht.", "Walters Schreiberin."] },
@@ -282,7 +283,7 @@ export default function Home() {
           </div>
           <div className="facts" aria-label="Überblick">
             <span><strong>45</strong> Min Schnellstart</span>
-            <span><strong>2</strong> digitale Sicherungen</span>
+          <span><strong>2</strong> Screenshots für OneNote</span>
             <span><strong>3</strong> Niveaustufen</span>
           </div>
         </div>
@@ -319,10 +320,11 @@ export default function Home() {
         <div className="runline" aria-label="Stundenverlauf">
           <span><b>03′</b> Ankommen</span><i />
           <span><b>07′</b> Figuren</span><i />
-          <span><b>08′</b> Handlung</span><i />
-          <span><b>08′</b> Sicherung</span><i />
-          <span><b>12′</b> Rezeption</span><i />
-          <span><b>07′</b> Variant</span>
+          <span><b>10′</b> Handlung</span><i />
+          <span><b>04′</b> Screenshots</span><i />
+          <span><b>10′</b> Rezeption</span><i />
+          <span><b>08′</b> offene Fragen</span><i />
+          <span><b>03′</b> Exit</span>
         </div>
 
         <article className="task-card figure-task">
@@ -334,6 +336,7 @@ export default function Home() {
             <div className="figure-stage">
               <div className="figure-column left">
                 <span className="person purple">Ruprecht<small>Verlobter · zunächst beschuldigt</small></span>
+                <span className="person sand">Veit Tümpel<small>Ruprechts Vater · Brigittes Bruder</small></span>
                 <span className="person green">Frau Marthe<small>Mutter · Klägerin</small></span>
                 <span className="person rose">Eve<small>Tochter · unter Druck</small></span>
               </div>
@@ -344,6 +347,12 @@ export default function Home() {
                 <span className="person new">Frau Brigitte<small>Zeugin · bringt Indizien</small></span>
               </div>
             </div>
+            <ol className="op-steps">
+              <li><b>Vergleicht</b> das vorgegebene Bild mit eurer Sicherung aus der letzten Stunde.</li>
+              <li><b>Ergänzt</b> zu zweit die vier neuen Beziehungen und Veränderungen.</li>
+              <li><b>Prüft</b> eure Auswahl digital und verbessert sie bei Bedarf.</li>
+              <li><b>Öffnet</b> danach die Sicherungsansicht, erstellt einen Screenshot und <b>ladet ihn in OneNote</b> unter „Figurenkonstellation“ hoch.</li>
+            </ol>
             <div className="match-grid">
               {figurePrompts.map((item) => {
                 const isRight = figureAnswers[item.id] === item.answer;
@@ -372,6 +381,12 @@ export default function Home() {
             <h3>Bringt die Post-its in die richtige Reihenfolge.</h3>
             <p>Zieht die Karten oder nutzt die Pfeile. Entscheidend ist der Erkenntnisfortschritt: Was weiß das Publikum nach jedem Auftritt mehr?</p>
             <div className="level-hint"><b>{levelCopy[level].label}</b><span>{quickDifferentiation[level].plot}</span></div>
+            <ol className="op-steps">
+              <li><b>Ordnet</b> die sieben Karten zu Auftritt 8–13. Beachtet: Der Variant ist die ausführlichere Alternative zum 12. Auftritt.</li>
+              <li><b>Vergleicht</b> eure Reihenfolge mit einer Partnerin oder einem Partner.</li>
+              <li><b>Prüft</b> die Reihenfolge. Lest die Inhaltsangaben anschließend noch einmal vollständig.</li>
+              <li><b>Sichert</b> die richtige Lösung als Screenshot in OneNote unter „Handlungsverlauf“.</li>
+            </ol>
             <div className="plot-list">
               {plot.map((card, index) => (
                 <div
@@ -383,7 +398,7 @@ export default function Home() {
                   onDrop={() => dropPlot(card.id)}
                 >
                   <div className="grip" aria-hidden="true">⋮⋮</div>
-                  <div><span>AUFTRITT ?</span><strong>{card.title}</strong><p>{card.summary}</p></div>
+                  <div><span>{plotChecked && plotCorrect ? `AUFTRITT ${card.act}` : "AUFTRITT ?"}</span><strong>{card.title}</strong><p>{card.summary}</p></div>
                   <div className="move-buttons">
                     <button aria-label={`${card.title} nach oben`} onClick={() => movePlot(index, -1)} disabled={index === 0}>↑</button>
                     <button aria-label={`${card.title} nach unten`} onClick={() => movePlot(index, 1)} disabled={index === plot.length - 1}>↓</button>
@@ -394,7 +409,7 @@ export default function Home() {
             <div className="task-actions">
               <button className="primary compact" onClick={() => setPlotChecked(true)}>Reihenfolge prüfen</button>
               <button className="text-button" onClick={() => { setPlot(shuffledPlot); setPlotChecked(false); }}>Neu mischen</button>
-              {plotChecked && <p className={plotCorrect ? "feedback success" : "feedback error"}>{plotCorrect ? "Richtig geordnet. Die Aufklärung verdichtet sich von der Pause zur Entlarvung." : "Noch nicht. Beginnt mit Adams Bewirtung; der offene Krugfall steht ganz am Schluss."}</p>}
+              {plotChecked && <p className={plotCorrect ? "feedback success" : "feedback error"}>{plotCorrect ? "Richtig geordnet. Der Variant steht als Alternative direkt nach dem 12. Auftritt; der offene Krugfall bildet den Schluss." : "Noch nicht. Beginnt mit Adams Bewirtung. Der Variant gehört zum 12. Auftritt; das offene Krugurteil steht ganz am Schluss."}</p>}
             </div>
           </div>
         </article>
@@ -404,7 +419,7 @@ export default function Home() {
           <div className="task-content">
             <p className="task-label">SICHERUNG · SCREENSHOT</p>
             <h3>Euer Ergebnis in einem Bild</h3>
-            <p>Wenn beide Prüfungen grün sind, öffnet die Sicherungsansicht und macht einen Screenshot für eure Unterlagen.</p>
+            <p>Wenn beide Prüfungen grün sind, öffnet die Sicherungsansicht. Erstellt jeweils einen Screenshot der Figurenkonstellation und des Handlungsverlaufs und ladet beide Bilder in eure OneNote-Seite hoch.</p>
             <details className="solution-panel" open={plotChecked && plotCorrect && figureChecked && figuresCorrect}>
               <summary>Sicherungsansicht öffnen</summary>
               <div className="screenshot-sheet">
@@ -429,6 +444,12 @@ export default function Home() {
             <p className="task-label">REZEPTION · PERSÖNLICHER ZUGANG</p>
             <h3>Was bleibt nach der Ganzlektüre?</h3>
             <div className="level-hint"><b>{levelCopy[level].label}</b><span>{quickDifferentiation[level].reflection}</span></div>
+            <ol className="op-steps">
+              <li><b>Notiert</b> zunächst still mindestens eine Beobachtung und eine offene Frage.</li>
+              <li><b>Tauscht</b> euch zu zweit aus und wählt die wichtigste offene Frage aus.</li>
+              <li><b>Tragt</b> diese Frage auf der gemeinsamen OneNote-Seite „Offene Fragen zur Ganzlektüre“ ein.</li>
+              <li><b>Bereitet</b> euch darauf vor, euer vorläufiges Schuldurteil in einem Satz zu begründen.</li>
+            </ol>
             <div className="reflection-grid">
               <label><span>Das fand ich überzeugend oder irritierend:</span><textarea value={reflection.liked} onChange={(e) => setReflection({ ...reflection, liked: e.target.value })} placeholder="Eine Szene, eine Figur, eine Wirkung …" /></label>
               <label><span>Diese Frage ist noch offen:</span><textarea value={reflection.open} onChange={(e) => setReflection({ ...reflection, open: e.target.value })} placeholder="Was möchtest du in der Reihe klären?" /></label>
@@ -447,7 +468,7 @@ export default function Home() {
         </div>
         <div className="variant-note">
           <div className="variant-letter">V</div>
-          <div><span className="micro">KURZ GEKLÄRT</span><h3>Was ist der Variant?</h3><p>Der <strong>Variant</strong> ist Kleists ausführlichere ursprüngliche Fassung des 12. Auftritts. Sie erzählt Eves Perspektive, Adams Täuschung und die Vertrauensfrage erheblich genauer. Kleist kürzte die Szene später für die Bühnenfassung; die längere Version blieb als Anhang erhalten.</p></div>
+          <div><span className="micro">KURZ GEKLÄRT · 3 MINUTEN</span><h3>Was ist der Variant?</h3><p>Der <strong>Variant</strong> ist Kleists ausführlichere ursprüngliche Fassung des 12. Auftritts. Sie erzählt Eves Perspektive, Adams Täuschung und die Vertrauensfrage erheblich genauer. Kleist kürzte die Szene später für die Bühnenfassung; die längere Version blieb als Anhang erhalten.</p><p className="variant-task"><b>Partner-Check:</b> Erklärt euch gegenseitig in höchstens 20 Sekunden, warum der Variant in der Handlungsübersicht beim 12. Auftritt steht und nicht als 14. Auftritt gezählt wird.</p></div>
         </div>
       </section>
 
@@ -456,7 +477,7 @@ export default function Home() {
         <div className="material-grid">
           <article className="material-card featured"><span>M1</span><h3>Interaktive Schüleransicht</h3><p>Figuren ergänzen, Handlung 8–13 sortieren, Screenshot sichern und offene Fragen sammeln.</p><button onClick={() => scrollTo("schnellstart")}>Stunde öffnen →</button></article>
           <article className="material-card"><span>M2</span><h3>Figurenkonstellation</h3><p>Der Stand bis Auftritt 7 bleibt erhalten. Frau Brigitte, neue Wissensstände und veränderte Machtbeziehungen werden ergänzt.</p><button onClick={() => scrollTo("schnellstart")}>Zum Figurenbild →</button></article>
-          <article className="material-card"><span>M3</span><h3>Handlung 8–13</h3><p>Sechs knappe Post-its bilden den Erkenntnisfortschritt von der Bewirtung bis zum offenen Krugurteil ab.</p><button onClick={() => scrollTo("schnellstart")}>Zur Sortierung →</button></article>
+          <article className="material-card"><span>M3</span><h3>Handlung 8–13 + Variant</h3><p>Sieben knappe Post-its bilden den Erkenntnisfortschritt ab und ordnen den Variant korrekt als Alternative zum 12. Auftritt ein.</p><button onClick={() => scrollTo("schnellstart")}>Zur Sortierung →</button></article>
           <article className="material-card"><span>M4</span><h3>Rezeption & Variant</h3><p>Persönlicher Zugang, offene Fragen, Schuldurteil und eine kurze, fachlich klare Erklärung des Variants.</p><button onClick={() => scrollTo("schnellstart")}>Zu den Impulsen →</button></article>
           <article className="material-card external"><span>↗</span><h3>LearningApps</h3><p>Direkter Zugang zu ergänzenden Übungen ohne Umweg über das Portal.</p><div className="link-stack"><a href="https://learningapps.org/53819527" target="_blank" rel="noreferrer">Handlungsverlauf</a><a href="https://learningapps.org/53796413" target="_blank" rel="noreferrer">Adam und Licht</a><a href="https://learningapps.org/38085603" target="_blank" rel="noreferrer">Auftritte 1–7</a></div></article>
         </div>
@@ -470,6 +491,7 @@ export default function Home() {
           <article><span className="micro">CURRICULARE ANBINDUNG</span><h3>Kompetenzen aus dem schulinternen Curriculum</h3><ul><li>Figuren-, Handlungs-, Dialog- und Sprachgestaltung untersuchen</li><li>Mehrdeutigkeit und Kontextbezüge erklären</li><li>verbale, nonverbale und paraverbale Strategien analysieren</li><li>Inszenierungen in Gestaltung und Wirkung beurteilen</li><li>eine Dramenszene analysieren und interpretieren</li></ul></article>
           <article><span className="micro">DIFFERENZIERUNG</span><h3>Gleiches Ziel, drei Zugänge</h3><div className="level-legend"><b>Förder</b><span>reduzierte Auswahl, Wortschatz, Satzstarter</span><b>Basis</b><span>textnahe Standardaufgabe</span><b>Erweitert</b><span>Mehrdeutigkeit, Transfer, Urteil</span></div></article>
           <article><span className="micro">DIAGNOSE & SICHERUNG</span><h3>Zwei sichtbare Lernprodukte</h3><p>Die geprüfte Figurenkonstellation und die geordnete Handlungsübersicht werden in einer gemeinsamen Sicherungsansicht gebündelt. Der Screenshot dient unmittelbar als Grundlage für die folgende Unterrichtsarbeit.</p></article>
+          <article><span className="micro">MATERIALENTSCHEIDUNG</span><h3>Unterrichtsergebnis und Modelllösung verbinden</h3><p>Für Auftritt 1–7 bleibt eure im Unterricht entstandene Übersicht unverändert – das sichert Anschluss und Schülerorientierung. Für Auftritt 8–13 werden die fachlich präzisen, knapp paraphrasierten Inhalte des Einfach-Deutsch-Unterrichtsmodells ergänzt. Der Variant erhält eine eigene Karte direkt beim 12. Auftritt.</p></article>
         </div>
         <div className="teacher-plan">
           <div><span className="micro">45-MINUTEN-BRÜCKE</span><h3>Der Montag ist bewusst keine neue Analyse-Stunde.</h3><p>Die Hausaufgabe war die Ganzlektüre. Deshalb werden Figuren und Handlung zügig gesichert; die restliche Zeit macht Rezeptionsfragen sichtbar und klärt die Funktion des Variants. So startet Doppelstunde 1 mit einem belastbaren gemeinsamen Wissensstand.</p></div>
