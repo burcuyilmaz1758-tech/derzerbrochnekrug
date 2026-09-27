@@ -161,6 +161,7 @@ export default function Home() {
         <div className="brand-lockup">
           <div className="brand-mark" aria-hidden="true">K</div>
           <div>
+            <span className="course-code">GK Deutsch Q1 · Erd</span>
             <strong>Der zerbrochne Krug</strong>
             <span>Figuren verstehen · Handlung ordnen</span>
           </div>
@@ -174,6 +175,21 @@ export default function Home() {
           </select>
         </label>
       </header>
+
+      <section className="student-hero" aria-labelledby="hero-title">
+        <div className="hero-copy">
+          <span>Heinrich von Kleist</span>
+          <h1 id="hero-title">Wer zerbrach den Krug – und was zerbricht noch?</h1>
+          <p>Ergänzt das Beziehungsnetz der Figuren und bringt anschließend den zweiten Teil der Handlung in die richtige Reihenfolge.</p>
+        </div>
+        <div className="jug-scene" aria-hidden="true">
+          <div className="jug-handle" />
+          <div className="jug">
+            <i className="crack c1" /><i className="crack c2" /><i className="crack c3" />
+          </div>
+          <div className="jug-shadow" />
+        </div>
+      </section>
 
       <nav className="stepper" aria-label="Arbeitsschritte">
         <button className={step === 1 ? "active" : ""} onClick={() => setStep(1)}><b>1</b><span>Figuren</span><small>7 Min.</small></button>
