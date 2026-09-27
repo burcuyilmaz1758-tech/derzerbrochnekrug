@@ -12,6 +12,51 @@ type PlotCard = {
   text: string;
 };
 
+const knownPlot: PlotCard[] = [
+  {
+    id: 1,
+    act: "1",
+    title: "Die angekündigte Revision",
+    text: "Licht findet Adam verletzt vor und kündigt die Revision durch Gerichtsrat Walter an. Adam glaubt ihm zunächst nicht, dann versucht er, Licht mit dem Versprechen einer Beförderung auf seine Seite zu ziehen (V. 129–133).",
+  },
+  {
+    id: 2,
+    act: "2",
+    title: "Adam in Schwierigkeiten",
+    text: "Als ein Bediensteter des Gerichtsrats dessen Ankunft meldet, gerät Adam in Panik. Er will sich ankleiden, dann entschuldigen lassen und schließlich den Besucher üppig bewirten. Seine Verwundung und die fehlende Perücke, für die er sich Ersatz vom Küster erhofft, bringen ihn in Erklärungsnot.",
+  },
+  {
+    id: 3,
+    act: "3",
+    title: "Adams Traum",
+    text: "Adam erzählt Licht, dass er im Traum als Richter angeklagt worden sei und sich selbst verurteilt habe.",
+  },
+  {
+    id: 4,
+    act: "4",
+    title: "Ankunft des Gerichtsrats",
+    text: "Nachdem ihn Adam übertrieben herzlich begrüßt hat, erklärt Walter, die ländliche Rechtspflege erkunden und verbessern zu wollen. Von dem Vorfall im Nachbardorf unangenehm berührt, stellt der Gerichtsrat auch in Huisum Unstimmigkeiten fest.",
+  },
+  {
+    id: 5,
+    act: "5",
+    title: "Fehlende Perücke",
+    text: "Da Adam keine Perücke zur Verfügung steht und Walter nicht warten kann, muss der Richter ohne sie die Verhandlung beginnen. Der Gerichtsrat bedauert Adam wegen dessen Verletzungen.",
+  },
+  {
+    id: 6,
+    act: "6",
+    title: "Die Gegner",
+    text: "Marthe Rull sucht Recht wegen eines zerbrochenen Krugs, den sie für unersetzlich hält. Die Umstände, wie es zu dem Schaden kam, veranlassen Ruprecht, die Verlobung mit Eve, Marthes Tochter, aufzukündigen und sie als „Metze“ zu beschimpfen. Eve will vermitteln, aber ihre Mutter den Ruf der jungen Frau retten.",
+  },
+  {
+    id: 7,
+    act: "7",
+    title: "Verhandlung I: Frau Marthe, Ruprecht",
+    text: "Der erschrockene Richter redet auf Eve ein, bis ihn Walter ermahnt, die Verhandlung ordnungsgemäß zu führen. In deren Verlauf muss der Gerichtsrat immer wieder eingreifen und drohen, das Verfahren Licht zu übergeben. Denn Adam beschuldigt Ruprecht und beruft sich auf die rechtlichen Gepflogenheiten in Huisum. Frau Marthe beschreibt die zerstörte Abbildung und die Geschichte des Krugs und schildert die Ereignisse der vergangenen Nacht in Eves Zimmer aus ihrer Sicht. Der Schuldige sei Ruprecht, was ihre Tochter zu bestätigen scheint, der Verlobte jedoch bestreitet. Dieser erzählt nun seinerseits, wie er das Geschehen erlebt hat, und verdächtigt den Schuster Lebrecht. Marthe dagegen verlangt, dass Eve die Überzeugung der Mutter mit ihrer Aussage beweise.",
+  },
+];
+
 const plotSolution: PlotCard[] = [
   { id: 8, act: "8", title: "Getränke", text: "Adam lässt sich ein Glas Wasser bringen und bietet Walter ebenfalls eines oder Wein an." },
   { id: 9, act: "9", title: "Verhandlung II: Eve", text: "Von Adam, der die Verhandlung schnell beenden will, und Marthe, die von ihrer Auffassung, wer den Krug zerbrochen hat, nicht abrückt, unter Druck gesetzt, beteuert Eve, dass es ihr Verlobter nicht gewesen sei. Ihre Mutter verdächtigt das Paar nun, seine Flucht vorbereitet zu haben: Frau Brigitte habe es in Marthes Garten beobachtet und solle es bezeugen." },
@@ -22,6 +67,7 @@ const plotSolution: PlotCard[] = [
 ];
 
 const initialPlot = [plotSolution[3], plotSolution[0], plotSolution[5], plotSolution[2], plotSolution[1], plotSolution[4]];
+const completePlot = [...knownPlot, ...plotSolution];
 
 const relationTokens = [
   { id: "family", text: "Schwester von Veit · Tante von Ruprecht" },
@@ -212,47 +258,80 @@ export default function Home() {
       {step === 2 && (
         <section className="activity">
           <div className="activity-head">
-            <div><span>AUFGABE 2 · EINZELARBEIT, DANN PARTNERVERGLEICH</span><h1>Handlung 8–13 ordnen</h1><p>Die Karten verwenden den Wortlaut des Einfach-Deutsch-Unterrichtsmodells.</p></div>
+            <div><span>AUFGABE 2 · EINZELARBEIT, DANN PARTNERVERGLEICH</span><h1>Den Handlungsverlauf vervollständigen</h1><p>Auftritt 1–7 ist bereits vorgegeben. Ihr ordnet ausschließlich die Auftritte 8–13.</p></div>
             <div className="time">12 <small>Min.</small></div>
           </div>
 
           <ol className="instructions">
-            <li>Bringt die sechs Karten zu den Auftritten 8–13 in die richtige Reihenfolge.</li>
+            <li>Lest zunächst die bereits gesicherte Übersicht zu den Auftritten 1–7.</li>
+            <li>Bringt anschließend die sechs Karten zu den Auftritten 8–13 in die richtige Reihenfolge.</li>
             <li>Vergleicht eure Reihenfolge kurz mit einer Partnerin oder einem Partner.</li>
             <li>Wählt <strong>„Reihenfolge prüfen“</strong> und verbessert sie, falls nötig.</li>
-            <li>Lest die richtige Übersicht vollständig. Fotografiert sie und ladet das Bild in OneNote unter <strong>„Handlungsverlauf“</strong> hoch.</li>
+            <li>Lest die vollständige Sicherung zu Auftritt 1–13. Erstellt davon eine Ganzseitenaufnahme und ladet sie in OneNote unter <strong>„Handlungsverlauf“</strong> hoch.</li>
           </ol>
 
           <div className="hint">{levelHints[level].plot}</div>
 
-          <div className={`sort-list ${plotChecked && plotCorrect ? "is-solution" : ""}`}>
-            {plot.map((card, index) => (
-              <article
-                key={card.id}
-                className="sort-card"
-                draggable
-                onDragStart={() => setDragPlot(card.id)}
-                onDragOver={(event) => event.preventDefault()}
-                onDrop={() => dropPlot(card.id)}
-              >
-                <span className="handle">⋮⋮</span>
-                <span className="order">{plotChecked && plotCorrect ? card.act : index + 1}</span>
-                <div><strong>{card.title}</strong><p>{card.text}</p></div>
-                <div className="arrows"><button onClick={() => movePlot(index, -1)} disabled={index === 0}>↑</button><button onClick={() => movePlot(index, 1)} disabled={index === plot.length - 1}>↓</button></div>
-              </article>
-            ))}
-          </div>
+          {!(plotChecked && plotCorrect) ? (
+            <>
+              <section className="prior-plot" aria-labelledby="prior-heading">
+                <h2 id="prior-heading">Bereits gesichert: Auftritt 1–7</h2>
+                <div className="plot-table">
+                  <div className="plot-row plot-header"><span>Auftritt</span><span>Überschrift</span><span>Inhalt</span></div>
+                  {knownPlot.map((card) => (
+                    <div className="plot-row" key={card.id}>
+                      <b>{card.act}</b><strong>{card.title}</strong><p>{card.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
 
-          {plotChecked && plotCorrect && (
-            <aside className="variant-note">
-              <strong>Wichtig zum Variant:</strong>
-              <span>Der Variant ist die ausführlichere ursprüngliche Fassung des 12. Auftritts. Er ist kein zusätzlicher 14. Auftritt und wird deshalb nicht als eigene Karte an das Ende gesetzt.</span>
-            </aside>
+              <section className="new-plot" aria-labelledby="new-heading">
+                <h2 id="new-heading">Jetzt ordnen: Auftritt 8–13</h2>
+                <div className="sort-list">
+                  {plot.map((card, index) => (
+                    <article
+                      key={card.id}
+                      className="sort-card"
+                      draggable
+                      onDragStart={() => setDragPlot(card.id)}
+                      onDragOver={(event) => event.preventDefault()}
+                      onDrop={() => dropPlot(card.id)}
+                    >
+                      <span className="handle">⋮⋮</span>
+                      <span className="order">{index + 1}</span>
+                      <div><strong>{card.title}</strong><p>{card.text}</p></div>
+                      <div className="arrows"><button onClick={() => movePlot(index, -1)} disabled={index === 0}>↑</button><button onClick={() => movePlot(index, 1)} disabled={index === plot.length - 1}>↓</button></div>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            </>
+          ) : (
+            <section className="complete-plot" aria-labelledby="complete-heading">
+              <div className="solution-title">
+                <div><span>RICHTIGE LÖSUNG</span><h2 id="complete-heading">Gesamtsicherung: Auftritt 1–13</h2></div>
+                <b>✓ geprüft</b>
+              </div>
+              <div className="plot-table complete-table">
+                <div className="plot-row plot-header"><span>Auftritt</span><span>Überschrift</span><span>Inhalt</span></div>
+                {completePlot.map((card) => (
+                  <div className="plot-row" key={card.id}>
+                    <b>{card.act}</b><strong>{card.title}</strong><p>{card.text}</p>
+                  </div>
+                ))}
+              </div>
+              <aside className="variant-note">
+                <strong>Wichtig zum Variant:</strong>
+                <span>Der Variant ist die ausführlichere ursprüngliche Fassung des 12. Auftritts. Er ist kein zusätzlicher 14. Auftritt und wird deshalb nicht als eigene Karte an das Ende gesetzt.</span>
+              </aside>
+              <div className="screenshot-note">Erstellt jetzt eine Ganzseitenaufnahme dieser vollständigen Übersicht und ladet sie in OneNote unter <strong>„Handlungsverlauf“</strong> hoch.</div>
+            </section>
           )}
 
           <div className="actionbar">
-            <button className="check" onClick={() => setPlotChecked(true)}>Reihenfolge prüfen</button>
-            {plotChecked && <span className={plotCorrect ? "ok" : "no"}>{plotCorrect ? "Richtig! Jetzt vollständig lesen, fotografieren und in OneNote hochladen." : "Noch nicht richtig. Die Bewirtung eröffnet den zweiten Teil; der Krugfall bleibt zuletzt offen."}</span>}
+            {!(plotChecked && plotCorrect) && <button className="check" onClick={() => setPlotChecked(true)}>Reihenfolge prüfen</button>}
+            {plotChecked && <span className={plotCorrect ? "ok" : "no"}>{plotCorrect ? "Richtig! Die vollständige Sicherung ist eingeblendet." : "Noch nicht richtig. Die Bewirtung eröffnet den zweiten Teil; der Krugfall bleibt zuletzt offen."}</span>}
           </div>
         </section>
       )}
