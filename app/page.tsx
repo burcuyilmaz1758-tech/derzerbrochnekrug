@@ -176,25 +176,16 @@ export default function Home() {
       </header>
 
       <section className="student-hero" aria-labelledby="hero-title">
+        <img
+          className="hero-image"
+          src="/adam-hero.png"
+          alt="Dorfrichter Adam sitzt mit verbundenem Kopf neben einem zerbrochenen Krug im Gerichtszimmer."
+        />
+        <div className="hero-scrim" aria-hidden="true" />
         <div className="hero-copy">
           <span>Heinrich von Kleist</span>
           <h1 id="hero-title">Wer zerbrach den Krug – und was zerbricht noch?</h1>
           <p>Ergänzt das Beziehungsnetz der Figuren und bringt anschließend den zweiten Teil der Handlung in die richtige Reihenfolge.</p>
-        </div>
-        <div className="adam-figure" aria-hidden="true">
-          <i className="figure-hair" />
-          <i className="figure-head" />
-          <i className="figure-nose" />
-          <i className="figure-bandage" />
-          <i className="figure-torso" />
-          <i className="figure-collar" />
-        </div>
-        <div className="jug-scene" aria-hidden="true">
-          <div className="jug-handle" />
-          <div className="jug">
-            <i className="crack c1" /><i className="crack c2" /><i className="crack c3" />
-          </div>
-          <div className="jug-shadow" />
         </div>
       </section>
 
