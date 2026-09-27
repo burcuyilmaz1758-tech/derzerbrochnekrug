@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 type Level = "foerder" | "basis" | "erweitert";
-type Section = "start" | "schnellstart" | "reihe" | "material" | "lehrkraft";
+type Section = "start" | "schnellstart" | "material" | "lehrkraft";
 
 type PlotCard = {
   id: number;
@@ -169,11 +169,28 @@ const levelCopy: Record<Level, { label: string; short: string; note: string }> =
 
 const navItems: { id: Section; label: string }[] = [
   { id: "start", label: "Start" },
-  { id: "schnellstart", label: "Montag · 45 Min" },
-  { id: "reihe", label: "8 Doppelstunden" },
+  { id: "schnellstart", label: "Stunde · 45 Min" },
   { id: "material", label: "Materialien" },
   { id: "lehrkraft", label: "Lehrkraft" },
 ];
+
+const quickDifferentiation: Record<Level, { figures: string; plot: string; reflection: string }> = {
+  foerder: {
+    figures: "Nutzt die Verwandtschaftsangaben und fragt bei jedem Satz: Wer weiß oder beweist was?",
+    plot: "Orientierung: Zuerst bewirtet Adam Walter; am Schluss bleibt das Urteil über den Krug offen.",
+    reflection: "Wählt einen Impuls und antwortet in zwei vollständigen Sätzen. Nutzt: Ich denke …, weil …",
+  },
+  basis: {
+    figures: "Ordnet die neuen Beziehungen und Veränderungen nach der Ganzlektüre selbstständig zu.",
+    plot: "Ordnet nach dem Erkenntnisfortschritt: Was weiß das Publikum nach jedem Auftritt mehr?",
+    reflection: "Beantwortet zwei Impulse und begründet euer Urteil mit einem Ereignis aus dem Stück.",
+  },
+  erweitert: {
+    figures: "Ergänzt nach der Zuordnung eine Machtachse: Wer verliert, wer gewinnt durch Brigittes Aussage Autorität?",
+    plot: "Ordnet und formuliert anschließend eine These dazu, wie Kleist die Entlarvung verzögert.",
+    reflection: "Verbindet euer Urteil mit der Frage, ob Adams Entlarvung bereits Gerechtigkeit herstellt.",
+  },
+};
 
 function KrugMark({ small = false }: { small?: boolean }) {
   return (
@@ -194,7 +211,6 @@ export default function Home() {
   const [figureChecked, setFigureChecked] = useState(false);
   const [reflection, setReflection] = useState({ liked: "", open: "", verdict: "" });
   const [saved, setSaved] = useState(false);
-  const [openLesson, setOpenLesson] = useState(1);
 
   useEffect(() => {
     const stored = window.localStorage.getItem("krug-reflexion");
@@ -259,14 +275,14 @@ export default function Home() {
         <div className="hero-copy">
           <p className="kicker">Heinrich von Kleist · Ganzlektüre</p>
           <h1>Wahrheit entsteht<br /><em>aus den Scherben.</em></h1>
-          <p className="hero-text">Ein interaktiver Lernweg vom 8. Auftritt bis zum Variant – mit Figurenbild, Handlungssicherung, Textarbeit, Urteil und Klausurtraining.</p>
+          <p className="hero-text">Eine interaktive 45‑Minuten-Stunde zur Sicherung der Ganzlektüre: Figurenbild ergänzen, Auftritte 8–13 ordnen, Ergebnisse sichern und erste Rezeptionsfragen klären.</p>
           <div className="hero-actions">
-            <button className="primary" onClick={() => scrollTo("schnellstart")}>Montagsstunde starten <span>→</span></button>
-            <button className="secondary" onClick={() => scrollTo("reihe")}>Reihe ansehen</button>
+            <button className="primary" onClick={() => scrollTo("schnellstart")}>45‑Minuten-Stunde starten <span>→</span></button>
+            <button className="secondary" onClick={() => scrollTo("material")}>Material ansehen</button>
           </div>
           <div className="facts" aria-label="Überblick">
             <span><strong>45</strong> Min Schnellstart</span>
-            <span><strong>8 × 90</strong> Min Lernpfad</span>
+            <span><strong>2</strong> digitale Sicherungen</span>
             <span><strong>3</strong> Niveaustufen</span>
           </div>
         </div>
@@ -297,6 +313,8 @@ export default function Home() {
           <div className="lesson-clock"><strong>45</strong><span>MIN</span></div>
         </div>
         <p className="lead">Ihr kennt die Handlung bis zum 7. Auftritt. Ergänzt jetzt das Beziehungsnetz, ordnet die Auftritte 8–13 und sichert euer Ergebnis als Screenshot.</p>
+
+        <div className="level-instruction"><b>{levelCopy[level].label} · Arbeitsweise</b><span>{quickDifferentiation[level].figures}</span></div>
 
         <div className="runline" aria-label="Stundenverlauf">
           <span><b>03′</b> Ankommen</span><i />
@@ -353,6 +371,7 @@ export default function Home() {
             <p className="task-label">HANDLUNG 8–13 · 5–8 MIN</p>
             <h3>Bringt die Post-its in die richtige Reihenfolge.</h3>
             <p>Zieht die Karten oder nutzt die Pfeile. Entscheidend ist der Erkenntnisfortschritt: Was weiß das Publikum nach jedem Auftritt mehr?</p>
+            <div className="level-hint"><b>{levelCopy[level].label}</b><span>{quickDifferentiation[level].plot}</span></div>
             <div className="plot-list">
               {plot.map((card, index) => (
                 <div
@@ -409,6 +428,7 @@ export default function Home() {
           <div className="task-content">
             <p className="task-label">REZEPTION · PERSÖNLICHER ZUGANG</p>
             <h3>Was bleibt nach der Ganzlektüre?</h3>
+            <div className="level-hint"><b>{levelCopy[level].label}</b><span>{quickDifferentiation[level].reflection}</span></div>
             <div className="reflection-grid">
               <label><span>Das fand ich überzeugend oder irritierend:</span><textarea value={reflection.liked} onChange={(e) => setReflection({ ...reflection, liked: e.target.value })} placeholder="Eine Szene, eine Figur, eine Wirkung …" /></label>
               <label><span>Diese Frage ist noch offen:</span><textarea value={reflection.open} onChange={(e) => setReflection({ ...reflection, open: e.target.value })} placeholder="Was möchtest du in der Reihe klären?" /></label>
@@ -431,39 +451,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="reihe" className="ink-section section-anchor">
-        <div className="section-head light">
-          <div><p className="kicker">Unterrichtseinheit · 8 Doppelstunden</p><h2>Vom Schweigen zum Urteil</h2></div>
-          <p>Jede Doppelstunde folgt demselben Denkweg: <strong>wahrnehmen → belegen → deuten → urteilen.</strong></p>
-        </div>
-        <div className="journey-line" />
-        <div className="lesson-list">
-          {lessons.map((lesson) => (
-            <article key={lesson.no} className={openLesson === lesson.no ? "lesson open" : "lesson"}>
-              <button className="lesson-summary" onClick={() => setOpenLesson(openLesson === lesson.no ? 0 : lesson.no)}>
-                <span className="lesson-no">{String(lesson.no).padStart(2, "0")}</span>
-                <span className="lesson-name"><small>{lesson.eyebrow}</small><strong>{lesson.title}</strong><em>{lesson.question}</em></span>
-                <span className="lesson-level">{levelCopy[level].label}</span>
-                <span className="lesson-plus">{openLesson === lesson.no ? "−" : "+"}</span>
-              </button>
-              {openLesson === lesson.no && (
-                <div className="lesson-detail">
-                  <div className="detail-main"><span className="micro">KOMPETENZZIEL</span><p>{lesson.target}</p><span className="micro">ARBEITSAUFTRAG · {levelCopy[level].label.toUpperCase()}</span><div className="level-task">{lesson.levels[level]}</div></div>
-                  <div className="detail-side"><span className="micro">90-MINUTEN-TAKT</span><ul>{lesson.timing.map((time) => <li key={time}>{time}</li>)}</ul><span className="micro">MATERIALSET</span><ul>{lesson.kit.map((item) => <li key={item}>{item}</li>)}</ul><span className="micro">LERNPRODUKT</span><p>{lesson.product}</p><span className="material-tag">{lesson.material}</span></div>
-                </div>
-              )}
-            </article>
-          ))}
-        </div>
-      </section>
-
       <section id="material" className="paper-section materials section-anchor">
-        <div className="section-head"><div><p className="kicker">Materialbank</p><h2>Alles an einem Ort</h2></div><button className="secondary" onClick={() => window.print()}>Übersicht drucken</button></div>
+        <div className="section-head"><div><p className="kicker">Material der 45‑Minuten-Stunde</p><h2>Alles an einem Ort</h2></div><button className="secondary" onClick={() => window.print()}>Stundenübersicht drucken</button></div>
         <div className="material-grid">
-          <article className="material-card featured"><span>M0</span><h3>Montag · Schnellstart</h3><p>Figuren ergänzen, Handlung 8–13 sortieren, Screenshot sichern und offene Fragen sammeln.</p><button onClick={() => scrollTo("schnellstart")}>Interaktiv öffnen →</button></article>
-          {lessons.map((lesson) => (
-            <article className="material-card" key={lesson.no}><span>M{lesson.no}</span><h3>{lesson.title}</h3><p>{lesson.material.replace(/^M\d · /, "")}</p><button onClick={() => { setOpenLesson(lesson.no); scrollTo("reihe"); }}>Auftrag ansehen →</button></article>
-          ))}
+          <article className="material-card featured"><span>M1</span><h3>Interaktive Schüleransicht</h3><p>Figuren ergänzen, Handlung 8–13 sortieren, Screenshot sichern und offene Fragen sammeln.</p><button onClick={() => scrollTo("schnellstart")}>Stunde öffnen →</button></article>
+          <article className="material-card"><span>M2</span><h3>Figurenkonstellation</h3><p>Der Stand bis Auftritt 7 bleibt erhalten. Frau Brigitte, neue Wissensstände und veränderte Machtbeziehungen werden ergänzt.</p><button onClick={() => scrollTo("schnellstart")}>Zum Figurenbild →</button></article>
+          <article className="material-card"><span>M3</span><h3>Handlung 8–13</h3><p>Sechs knappe Post-its bilden den Erkenntnisfortschritt von der Bewirtung bis zum offenen Krugurteil ab.</p><button onClick={() => scrollTo("schnellstart")}>Zur Sortierung →</button></article>
+          <article className="material-card"><span>M4</span><h3>Rezeption & Variant</h3><p>Persönlicher Zugang, offene Fragen, Schuldurteil und eine kurze, fachlich klare Erklärung des Variants.</p><button onClick={() => scrollTo("schnellstart")}>Zu den Impulsen →</button></article>
           <article className="material-card external"><span>↗</span><h3>LearningApps</h3><p>Direkter Zugang zu ergänzenden Übungen ohne Umweg über das Portal.</p><div className="link-stack"><a href="https://learningapps.org/53819527" target="_blank" rel="noreferrer">Handlungsverlauf</a><a href="https://learningapps.org/53796413" target="_blank" rel="noreferrer">Adam und Licht</a><a href="https://learningapps.org/38085603" target="_blank" rel="noreferrer">Auftritte 1–7</a></div></article>
         </div>
         <p className="source-note">Hinweis: Längere Textpassagen werden bewusst nicht auf der Webseite vervielfältigt. Arbeitet bei den Analyseaufgaben mit eurer eigenen Textausgabe und den angegebenen Auftritten.</p>
@@ -472,10 +466,10 @@ export default function Home() {
       <section id="lehrkraft" className="teacher-section section-anchor">
         <div className="section-head"><div><p className="kicker">Lehrkraftbereich</p><h2>Didaktische Architektur</h2></div><div className="teacher-stamp">Q1 · GK<br />NRW</div></div>
         <div className="teacher-grid">
-          <article><span className="micro">ROTER FADEN</span><h3>Wissen, Macht und Vertrauen</h3><p>Nach der bereits gesicherten Exposition führt die Reihe von Eves Schweigen über Brigittes Indizien zur Entlarvung, zum Variant und schließlich zur Frage, ob Recht nach institutionellem Missbrauch wieder glaubwürdig werden kann.</p></article>
+          <article><span className="micro">STUNDENZIEL</span><h3>Gemeinsamer Wissensstand nach der Ganzlektüre</h3><p>Die Lernenden ergänzen ihre bis zum 7. Auftritt entwickelte Figurenkonstellation, ordnen die Handlung der Auftritte 8–13 und formulieren erste Rezeptionsfragen. Die Stunde schafft Orientierung; sie vertieft bewusst noch keine Einzelfigur.</p></article>
           <article><span className="micro">CURRICULARE ANBINDUNG</span><h3>Kompetenzen aus dem schulinternen Curriculum</h3><ul><li>Figuren-, Handlungs-, Dialog- und Sprachgestaltung untersuchen</li><li>Mehrdeutigkeit und Kontextbezüge erklären</li><li>verbale, nonverbale und paraverbale Strategien analysieren</li><li>Inszenierungen in Gestaltung und Wirkung beurteilen</li><li>eine Dramenszene analysieren und interpretieren</li></ul></article>
           <article><span className="micro">DIFFERENZIERUNG</span><h3>Gleiches Ziel, drei Zugänge</h3><div className="level-legend"><b>Förder</b><span>reduzierte Auswahl, Wortschatz, Satzstarter</span><b>Basis</b><span>textnahe Standardaufgabe</span><b>Erweitert</b><span>Mehrdeutigkeit, Transfer, Urteil</span></div></article>
-          <article><span className="micro">DIAGNOSE & SICHERUNG</span><h3>Sichtbare Lernprodukte</h3><p>Screenshot der Handlungs- und Figurenübersicht, Dilemma-Dreieck, Beweiskette, Gerechtigkeitswaage, Variant-Vergleich, Vertrauensbarometer, revidiertes Figurenbild und Schreibplan.</p></article>
+          <article><span className="micro">DIAGNOSE & SICHERUNG</span><h3>Zwei sichtbare Lernprodukte</h3><p>Die geprüfte Figurenkonstellation und die geordnete Handlungsübersicht werden in einer gemeinsamen Sicherungsansicht gebündelt. Der Screenshot dient unmittelbar als Grundlage für die folgende Unterrichtsarbeit.</p></article>
         </div>
         <div className="teacher-plan">
           <div><span className="micro">45-MINUTEN-BRÜCKE</span><h3>Der Montag ist bewusst keine neue Analyse-Stunde.</h3><p>Die Hausaufgabe war die Ganzlektüre. Deshalb werden Figuren und Handlung zügig gesichert; die restliche Zeit macht Rezeptionsfragen sichtbar und klärt die Funktion des Variants. So startet Doppelstunde 1 mit einem belastbaren gemeinsamen Wissensstand.</p></div>

@@ -120,6 +120,10 @@ h1 em { color: var(--copper); font-weight: 400; }
 .section-head h2 { font-family: Georgia, serif; font-size: clamp(38px, 5vw, 62px); line-height: 1; font-weight: 500; }
 .section-head > p { max-width: 460px; color: #c6d4dc; }
 .lead { max-width: 850px; font-family: Georgia, serif; font-size: 19px; color: #52636d; }
+.level-instruction, .level-hint { display: flex; gap: 14px; align-items: flex-start; padding: 12px 15px; background: #e4edf1; border-left: 4px solid var(--ink); font-size: 13px; }
+.level-instruction { max-width: 850px; margin-top: 18px; }
+.level-instruction b, .level-hint b { color: var(--copper); white-space: nowrap; }
+.level-hint { margin: 16px 0; background: #f1e4cf; border-left-color: var(--copper); }
 .lesson-clock { border: 2px solid var(--ink); width: 90px; height: 90px; display: grid; place-items: center; transform: rotate(2deg); box-shadow: 7px 7px 0 var(--gold); }
 .lesson-clock strong { font-family: Georgia, serif; font-size: 38px; line-height: .8; }
 .lesson-clock span { font-size: 10px; font-weight: 900; letter-spacing: .16em; margin-top: -16px; }
