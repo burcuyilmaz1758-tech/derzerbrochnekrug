@@ -158,9 +158,12 @@ export default function Home() {
   return (
     <main className="app-shell">
       <header className="topbar">
-        <div>
-          <strong>Der zerbrochne Krug</strong>
-          <span>Ganzlektüre sichern · Q1</span>
+        <div className="brand-lockup">
+          <div className="brand-mark" aria-hidden="true">K</div>
+          <div>
+            <strong>Der zerbrochne Krug</strong>
+            <span>Figuren verstehen · Handlung ordnen</span>
+          </div>
         </div>
         <label>
           Hilfe
@@ -186,7 +189,7 @@ export default function Home() {
           </div>
 
           <ol className="instructions">
-            <li>Vergleicht das Schaubild mit eurer Sicherung bis zum 7. Auftritt.</li>
+            <li>Vergleicht das Schaubild mit eurem bisherigen Ergebnis zu den Auftritten 1–7.</li>
             <li>Ordnet die vier Ergänzungskarten den passenden gestrichelten Feldern zu.</li>
             <li>Wählt <strong>„Lösung prüfen“</strong> und verbessert eure Zuordnung, falls nötig.</li>
             <li>Fotografiert die <strong>richtige Figurenkonstellation</strong> und ladet das Bild in OneNote unter <strong>„Figurenkonstellation“</strong> hoch.</li>
@@ -263,11 +266,11 @@ export default function Home() {
           </div>
 
           <ol className="instructions">
-            <li>Lest zunächst die bereits gesicherte Übersicht zu den Auftritten 1–7.</li>
+            <li>Lest zunächst die vorgegebene Übersicht zu den Auftritten 1–7.</li>
             <li>Bringt anschließend die sechs Karten zu den Auftritten 8–13 in die richtige Reihenfolge.</li>
             <li>Vergleicht eure Reihenfolge kurz mit einer Partnerin oder einem Partner.</li>
             <li>Wählt <strong>„Reihenfolge prüfen“</strong> und verbessert sie, falls nötig.</li>
-            <li>Lest die vollständige Sicherung zu Auftritt 1–13. Erstellt davon eine Ganzseitenaufnahme und ladet sie in OneNote unter <strong>„Handlungsverlauf“</strong> hoch.</li>
+            <li>Lest anschließend den vollständigen Handlungsverlauf zu Auftritt 1–13. Erstellt davon eine Ganzseitenaufnahme und ladet sie in OneNote unter <strong>„Handlungsverlauf“</strong> hoch.</li>
           </ol>
 
           <div className="hint">{levelHints[level].plot}</div>
@@ -275,7 +278,7 @@ export default function Home() {
           {!(plotChecked && plotCorrect) ? (
             <>
               <section className="prior-plot" aria-labelledby="prior-heading">
-                <h2 id="prior-heading">Bereits gesichert: Auftritt 1–7</h2>
+                <h2 id="prior-heading">Schon bekannt: Auftritt 1–7</h2>
                 <div className="plot-table">
                   <div className="plot-row plot-header"><span>Auftritt</span><span>Überschrift</span><span>Inhalt</span></div>
                   {knownPlot.map((card) => (
@@ -310,7 +313,7 @@ export default function Home() {
           ) : (
             <section className="complete-plot" aria-labelledby="complete-heading">
               <div className="solution-title">
-                <div><span>RICHTIGE LÖSUNG</span><h2 id="complete-heading">Gesamtsicherung: Auftritt 1–13</h2></div>
+                <div><span>RICHTIGE REIHENFOLGE</span><h2 id="complete-heading">Der vollständige Handlungsverlauf: Auftritt 1–13</h2></div>
                 <b>✓ geprüft</b>
               </div>
               <div className="plot-table complete-table">
@@ -322,8 +325,8 @@ export default function Home() {
                 ))}
               </div>
               <aside className="variant-note">
-                <strong>Wichtig zum Variant:</strong>
-                <span>Der Variant ist die ausführlichere ursprüngliche Fassung des 12. Auftritts. Er ist kein zusätzlicher 14. Auftritt und wird deshalb nicht als eigene Karte an das Ende gesetzt.</span>
+                <strong>Was bedeutet „Variant“?</strong>
+                <span>Der Variant ist Kleists ursprüngliche, ungekürzte Fassung des 12. Auftritts. Nach dem Misserfolg der Uraufführung 1808 kürzte Kleist diesen Auftritt stark. Der Buchausgabe von 1811 fügte er die Langfassung als Anhang wieder bei. Darin werden Eves Bericht, die Vorgeschichte des Attests und Adams Täuschung ausführlicher entfaltet.</span>
               </aside>
               <div className="screenshot-note">Erstellt jetzt eine Ganzseitenaufnahme dieser vollständigen Übersicht und ladet sie in OneNote unter <strong>„Handlungsverlauf“</strong> hoch.</div>
             </section>
@@ -331,13 +334,13 @@ export default function Home() {
 
           <div className="actionbar">
             {!(plotChecked && plotCorrect) && <button className="check" onClick={() => setPlotChecked(true)}>Reihenfolge prüfen</button>}
-            {plotChecked && <span className={plotCorrect ? "ok" : "no"}>{plotCorrect ? "Richtig! Die vollständige Sicherung ist eingeblendet." : "Noch nicht richtig. Die Bewirtung eröffnet den zweiten Teil; der Krugfall bleibt zuletzt offen."}</span>}
+            {plotChecked && <span className={plotCorrect ? "ok" : "no"}>{plotCorrect ? "Richtig! Der vollständige Handlungsverlauf ist jetzt eingeblendet." : "Noch nicht richtig. Die Bewirtung eröffnet den zweiten Teil; der Krugfall bleibt zuletzt offen."}</span>}
           </div>
         </section>
       )}
 
       <footer>
-        <span>Figurenkonstellation → Handlungsverlauf → Sicherung in OneNote</span>
+        <span>Figurenkonstellation → Handlungsverlauf → Upload in OneNote</span>
       </footer>
     </main>
   );
